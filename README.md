@@ -26,13 +26,34 @@ df = pd.read_csv("example_data.csv")
 group_col = "Group"
 biomarker_list = ["Biomarker1", "Biomarker2"]
 palette = {0: 'blue', 1: 'red'}
+xtick_labels=["Control", "Disease"]
+
+biomarker_title_names = {
+    "TREM2_pgml": "CSF sTREM2 (pg/mL)",
+    "Fractalkina_pgml": "CSF Fractalkine (pg/mL)",
+    "YKL_ngml": "CSF YKL40 (ng/mL)",
+    "S100b_pgml": "CSF S100β (pg/mL)",
+    "LCR_GFAP_SIMOA": "CSF GFAP (pg/mL)",
+    "GFAp pgmL_plasma baseline_SIMOA": "Plasma GFAP (pg/mL)"
+}
+
+biomarker_y_axis_names = {
+    "TREM2_pgml": "CSF sTREM2 (pg/mL)",
+    "Fractalkina_pgml": "CSF Fractalkine (pg/mL)",
+    "YKL_ngml": "CSF YKL40 (ng/mL)",
+    "S100b_pgml": "CSF S100β (pg/mL)",
+    "LCR_GFAP_SIMOA": "CSF GFAP (pg/mL)",
+    "GFAp pgmL_plasma baseline_SIMOA": "Plasma GFAP (pg/mL)"
+}
 
 # Generate boxplots
 generate_boxplots_with_significance_2(df, group_col, biomarker_list, palette,
                                       subplots_x=1, subplots_y=2, fig_size=(10, 6),
                                       xtick_labels=["Control", "Disease"], image_name="plot.png",
-                                      barheightfactor=0.05, bartipsfactor=0.01,
-                                      ytopfactor=0.1, yrangefactor=0.15, asterisk_factor=0.02)
+                                      bar_height_factor=0.05, bar_tips_factor=0.01,
+                                      y_top_factor=0.1, y_range_factor=0.15, asterisk_factor=0.02,
+                                      title= True, biomarker_title_names, y_labels= True, biomarker_y_label_names
+                                      correction_method= "fdr_bh", iqr_min, iqr_max, jitter_size, alpha, showfliers)
 ```
 
 ## Parameters explained
@@ -55,12 +76,32 @@ generate_boxplots_with_significance_2(df, group_col, biomarker_list, palette,
 
 **image_name (str, default="plot.png"):** Filename for saving the generated plot.
 
-**barheightfactor (float, default=0.05):** Height factor for significance bars.
+**bar_height_factor (float, default=0.05):** Height factor for significance bars.
 
-**bartipsfactor (float, default=0.01):** Reduction factor for bar tips.
+**bar_tips_factor (float, default=0.01):** Reduction factor for bar tips.
 
-**ytopfactor (float, default=0.1):** Scaling factor to adjust y-axis top margin.
+**y_top_factor (float, default=0.1):** Scaling factor to adjust y-axis top margin.
 
-**yrangefactor (float, default=0.15):** Scaling factor to adjust y-axis range.
+**y_range_factor (float, default=0.15):** Scaling factor to adjust y-axis range.
 
 **asterisk_factor (float, default=0.02):** Offset factor for asterisk positioning.
+
+**title (bool, default=True)** Whether to display titles for each biomarker plot.
+
+**biomarker_title_names (dict, optional)** Custom titles for biomarkers.
+
+**y_labels (bool, default=True)** Whether to display y-axis labels.
+
+**biomarker_y_label_names (dict, optional)** Custom y-axis labels for biomarkers.
+
+**correction_method (str, default="fdr_bh")** Method for p-value correction (e.g., "bonferroni", "fdr_bh").
+
+**iqr_min (float, optional)** Lower bound for interquartile range filtering.
+
+**iqr_max (float, optional)** Upper bound for interquartile range filtering.
+
+**jitter_size (float, optional)** Size of jitter points in the strip plot.
+
+**alpha (float, optional)** Transparency level for strip plot points.
+
+**showfliers (bool, optional)** Whether to display outliers in the boxplot.
