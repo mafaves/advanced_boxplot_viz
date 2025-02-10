@@ -47,7 +47,7 @@ biomarker_y_axis_names = {
 }
 
 # Generate boxplots
-generate_boxplots_with_significance_2(df, group_col, biomarker_list, palette,
+generate_boxplots_with_significance(df, group_col, biomarker_list, palette,
                                       subplots_x=1, subplots_y=2, fig_size=(10, 6),
                                       xtick_labels=["Control", "Disease"], image_name="plot.png",
                                       bar_height_factor=0.05, bar_tips_factor=0.01,
