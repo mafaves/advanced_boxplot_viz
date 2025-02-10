@@ -107,6 +107,9 @@ generate_boxplots_with_significance(df, group_col, biomarker_list, palette, biom
 
 **jitter_size (float, optional)** Size of jitter points in the strip plot.
 
+## Output
+![boxplot](./boxplot.png)
+
 **alpha (float, optional)** Transparency level for strip plot points.
 
 **showfliers (bool, optional)** Whether to display outliers in the boxplot.
