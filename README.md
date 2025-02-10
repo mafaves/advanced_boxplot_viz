@@ -17,7 +17,7 @@ This repository provides a Python tool for creating boxplots with statistical si
 ## Usage
 ```
 import pandas as pd
-from boxplot_significance import generate_boxplots_with_significance_2
+from boxplot_significance import generate_boxplots_with_significance
 
 # Load example data
 df = pd.read_csv("example_data.csv")
