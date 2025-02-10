@@ -6,20 +6,6 @@ from itertools import combinations
 from scipy.stats import ttest_ind
 from statsmodels.stats.multitest import multipletests
 
-# Dictionary for axis and title names
-biomarker_names = {
-    "TREM2_pgml": "CSF sTREM2 (pg/mL)",
-    "Fractalkina_pgml": "CSF Fractalkine (pg/mL)",
-    "YKL_ngml": "CSF YKL40 (ng/mL)",
-    "S100b_pgml": "CSF S100β (pg/mL)",
-    "LCR_GFAP_SIMOA": "CSF GFAP (pg/mL)",
-    "GFAp pgmL_plasma baseline_SIMOA": "Plasma GFAP (pg/mL)"
-}
-
-# Default color palettes
-palette_1 = {0: 'blue', 1: 'green', 2: 'red', 3: 'orange'}
-palette_2 = {0: 'blue', 1: 'red'}
-
 def collect_p_values(df, group_col, biomarker_list, correction_method='fdr_bh'):
     """
     Collects p-values for pairwise comparisons across biomarkers and applies p-value correction.
@@ -65,7 +51,7 @@ def generate_boxplots_with_significance(
     subplots_x=1, subplots_y=1, fig_size=(10, 6), 
     xtick_labels=None, image_name="boxplot.png",
     bar_height_factor=0.02, bar_tips_factor=0.005, 
-    ytop_factor=0.05, yrange_factor=0.1, asterisk_factor=0.02, 
+    y_top_factor=0.05, y_range_factor=0.1, asterisk_factor=0.02, 
     title=True, biomarker_title_names, y_labels=True, biomarker_y_label_names. correction_method='fdr_bh',
     iqr_min=0.05, iqr_max=0.95, jitter_size=8, alpha=0.8, showfliers=False
 ):
@@ -84,8 +70,8 @@ def generate_boxplots_with_significance(
     - image_name (str): Filename for saving the figure.
     - bar_height_factor (float): Height of significance bars.
     - bar_tips_factor (float): Offset for bar tips.
-    - ytop_factor (float): Space above the highest data point.
-    - yrange_factor (float): Extra space above the highest data point.
+    - y_top_factor (float): Space above the highest data point.
+    - y_range_factor (float): Extra space above the highest data point.
     - asterisk_factor (float): Position of significance stars.
     - title (bool): Whether to show titles.
     - biomarker_title_names (dict): Dictionary title names
@@ -131,15 +117,29 @@ def generate_boxplots_with_significance(
 
         # Add significance bars
         y_range = filtered_data.max() - filtered_data.min()
-        top = filtered_data.max() + (y_range * ytop_factor)
+        top = filtered_data.max() + (y_range * y_top_factor)
+        category_positions = {category: pos for pos, category in enumerate(sorted(df[group_col].unique()))}
+        y_min, y_max = ax.get_ylim()
+        ax.set_ylim(y_min, top + (y_range * y_range_factor))
 
         for i, (comb, p_corr) in enumerate(significance_dict.get(biomarker, [])):
-            sig_symbol = '***' if p_corr < 0.001 else '**' if p_corr < 0.01 else '*' if p_corr < 0.05 else 'ns'
-            x1, x2 = sorted([comb[0], comb[1]])
-            bar_height = (y_range * bar_height_factor * (i + 1)) + top
-            ax.plot([x1, x1, x2, x2], [bar_height, bar_height, bar_height, bar_height], lw=2, c='k')
-            ax.text((x1 + x2) / 2, bar_height + (y_range * asterisk_factor), sig_symbol, ha='center', va='bottom', c='k', fontsize=18)
+            # Determine the height of the significance bar
+            level = len(significant_combinations) - i
+            bar_height = (y_range * bar_height_factor * level) + top
+            bar_tips = bar_height - (y_range * bar_tips_factor)
 
+            sig_symbol = '***' if p_corr < 0.001 else '**' if p_corr < 0.01 else '*' if p_corr < 0.05 else 'ns'
+            x1, x2 = category_positions[comb[0]], category_positions[comb[1]]
+            bar_height = (y_range * bar_height_factor * (i + 1)) + top
+            ax.plot([x1, x1, x2, x2], [bar_tips, bar_height, bar_height, bar_tips], lw=2, c='k')
+            text_height = bar_height + (y_range * asterisk_factor)
+            ax.text((x1 + x2) / 2, text_height, sig_symbol, ha='center', va='bottom', c='k', fontsize=18)
+    
+    # Hide extra subplots
+    if len(biomarker_list) < len(axes):
+        for j in range(len(biomarker_list), len(axes)):
+            fig.delaxes(axes[j])
+    
     plt.tight_layout()
     plt.savefig(image_name, format='png', dpi=300)
     plt.show()
