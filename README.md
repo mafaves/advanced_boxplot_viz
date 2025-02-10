@@ -1,4 +1,4 @@
-# Boxplot Significance 📊
+# Boxplot with statistical significance bars 📊
 
 ## Overview
 
@@ -10,7 +10,7 @@ This repository provides a Python tool for creating boxplots with statistical si
 
 🎨 Customizable boxplots (colors, labels, and layouts)
 
-🔬 Supports multiple p-value corrections (Bonferroni, FDR, etc.)
+🔬 Supports multiple p-value corrections (Bonferroni, FDR, etc.) from statsmodels.stats.multitest.multipletests library
 
 📊 Ideal for biomarker analysis and research visualization
 
