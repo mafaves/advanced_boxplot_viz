@@ -4,3 +4,26 @@
 2025-02-11 10:51:33,718 [22688] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
 2025-02-11 10:51:33,718 [22688] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
 2025-02-11 10:51:33,718 [22688] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2025-02-11 11:04:03,086 [26740] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2025-02-11 11:04:03,096 [26740] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2025-02-11 11:04:03,096 [26740] INFO     root:247: [JupyterRequire] Initializing comms.
+2025-02-11 11:04:03,097 [26740] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2025-02-11 11:04:03,097 [26740] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2025-02-11 11:04:03,098 [26740] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2025-02-11 11:04:03,619 [26740] ERROR    ipykernel.comm:46: [JupyterRequire] No such comm target registered: jupyter.widget.control
+2025-02-11 11:04:03,624 [26740] WARNING  Comm:212: [JupyterRequire] No such comm: 33ec80be-2ca8-4950-bca8-44c327470435
+2025-02-11 11:04:03,625 [26740] DEBUG    Comm:215: [JupyterRequire] Current comms: ['config.JupyterRequire#1739268243.096837', 'execute.JupyterRequire#1739268243.096837', 'safe_execute.JupyterRequire#1739268243.096837']
+2025-02-11 11:04:03,873 [26740] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2025-02-11 11:04:03,873 [26740] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2025-02-11 11:04:03,873 [26740] INFO     root:247: [JupyterRequire] Initializing comms.
+2025-02-11 11:04:03,874 [26740] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2025-02-11 11:04:03,875 [26740] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2025-02-11 11:04:03,875 [26740] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2025-02-11 11:04:11,649 [26740] INFO     numexpr.utils:148: [JupyterRequire] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-02-11 11:04:11,649 [26740] INFO     numexpr.utils:160: [JupyterRequire] NumExpr defaulting to 8 threads.
+2025-02-11 11:04:11,969 [26740] DEBUG    matplotlib:337: [JupyterRequire] matplotlib data path: C:\Users\Marcos\anaconda3\lib\site-packages\matplotlib\mpl-data
+2025-02-11 11:04:11,973 [26740] DEBUG    matplotlib:337: [JupyterRequire] CONFIGDIR=C:\Users\Marcos\.matplotlib
+2025-02-11 11:04:11,973 [26740] DEBUG    matplotlib:1498: [JupyterRequire] interactive is False
+2025-02-11 11:04:11,973 [26740] DEBUG    matplotlib:1499: [JupyterRequire] platform is win32
+2025-02-11 11:04:12,014 [26740] DEBUG    matplotlib:337: [JupyterRequire] CACHEDIR=C:\Users\Marcos\.matplotlib
+2025-02-11 11:04:12,019 [26740] DEBUG    matplotlib.font_manager:1574: [JupyterRequire] Using fontManager instance from C:\Users\Marcos\.matplotlib\fontlist-v330.json
