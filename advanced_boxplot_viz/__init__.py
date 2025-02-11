@@ -5,6 +5,7 @@
 # @Email   : marcos.aguilella@idival.org
 # @File    : __init__.py
 
-from .boxplot_with_significance_bars import *
-from .stats import *
-from .utils import *
+__all__ = ['boxplot_with_significance_bars', 'stats', 'utils']
+# from .boxplot_with_significance_bars import *
+# from .stats import *
+# from .utils import *
