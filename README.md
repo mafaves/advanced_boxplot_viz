@@ -119,7 +119,7 @@ generate_boxplots_with_significance(df, group_col, biomarker_list, palette, biom
 **showfliers (bool, optional)** Whether to display outliers in the boxplot.
 
 ## Output example
-![boxplot](./boxplots.png)
+![boxplot](./example/boxplots.png)
 
 ## Acknowledgment
 
