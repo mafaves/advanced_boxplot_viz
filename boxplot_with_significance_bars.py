@@ -52,7 +52,7 @@ def generate_boxplots_with_significance(
 	xtick_labels=None, image_name="boxplot.png",
 	bar_height_factor=0.02, bar_tips_factor=0.005, 
 	y_top_factor=0.05, y_range_factor=0.1, asterisk_factor=0.02, 
-	title=True, y_labels=True, correction_method='fdr_bh',
+	title=True, y_labels=True, correction_method='fdr_bh', p_value_format = 'text',
 	iqr_min=0.05, iqr_max=0.95, jitter_size=8, alpha=0.8, showfliers=False
 ):
 	"""
@@ -78,6 +78,7 @@ def generate_boxplots_with_significance(
 	- title (bool): Whether to show titles.
 	- y_labels (bool): Whether to show y-axis labels.
 	- correction_method (str): P-value correction method.
+ 	- p_value_format (str): 'text' or 'asterisk'.
 	- iqr_min (float): Lower percentile for filtering outliers.
 	- iqr_max (float): Upper percentile for filtering outliers.
 	- jitter_size (int): Size of jittered points in the scatterplot.
@@ -87,6 +88,8 @@ def generate_boxplots_with_significance(
 	Returns:
 	- None
 	"""
+	print("Running...")
+	print("Plotting data between interquartiles 0.05 and 0.95")
 	significance_dict = collect_p_values(df, group_col, biomarker_list, correction_method)
 
 	fig, axes = plt.subplots(subplots_x, subplots_y, figsize=fig_size)
@@ -96,30 +99,40 @@ def generate_boxplots_with_significance(
 		filtered_data = df.groupby(group_col)[biomarker].apply(
 			lambda x: x[(x >= x.quantile(iqr_min)) & (x <= x.quantile(iqr_max))]
 		).reset_index(level=0, drop=True)
-
+		
+		# Stripplot settings
 		sns.stripplot(
 			data=df[df.index.isin(filtered_data.index)], x=group_col, y=biomarker, ax=ax,
 			jitter=True, palette=palette, hue=group_col, legend=False, dodge=False,
 			alpha=alpha, zorder=2, size=jitter_size
 		)
+		
+		# Boxplot settings
 		sns.boxplot(
 			data=df[df.index.isin(filtered_data.index)], x=group_col, y=biomarker, ax=ax,
 			palette=palette, hue=group_col, legend=False, showcaps=True, showfliers=showfliers,
 			boxprops={'zorder': 1, 'alpha': 0.35}
 		)
 		ax.set_xlabel(None)
+
+		# Subplots settings
+			# Title labels
 		if title:
 			ax.set_title(biomarker_title_names.get(biomarker, biomarker), fontsize=20)
+			# y axis labels
 		if y_labels:
 			ax.set_ylabel(biomarker_y_axis_names.get(biomarker, biomarker), fontsize=18)
-		ax.set_xticks(range(len(xtick_labels)))
+			# x axis labels
+		ax.set_xlabel(None)
+		ax.set_xticks(range(len(xtick_labels)))	
 		ax.set_xticklabels(xtick_labels, fontsize=16)
 
-		# Add significance bars
-		y_range = filtered_data.max() - filtered_data.min()
-		top = filtered_data.max() + (y_range * y_top_factor)
+		# Significance bars settings
 		category_positions = {category: pos for pos, category in enumerate(sorted(df[group_col].unique()))}
-		y_min, y_max = ax.get_ylim()
+		
+		y_range = filtered_data.max() - filtered_data.min()
+		y_min, y_max = ax.get_ylim()		
+		top = filtered_data.max() + (y_range * y_top_factor)
 		ax.set_ylim(y_min, top + (y_range * y_range_factor))
 		
 		significant_combinations = significance_dict.get(biomarker, [])
@@ -130,7 +143,14 @@ def generate_boxplots_with_significance(
 			bar_height = (y_range * bar_height_factor * level) + top
 			bar_tips = bar_height - (y_range * bar_tips_factor)
 
-			sig_symbol = '***' if p_corr < 0.001 else '**' if p_corr < 0.01 else '*' if p_corr < 0.05 else 'ns'
+			if p_value_format == "asterisk":
+				sig_symbol = '***' if p_corr < 0.001 else '**' if p_corr < 0.01 else '*' if p_corr < 0.05 else 'ns'
+			
+			elif p_value_format == "text":
+				sig_symbol = "p ≤ 0.001" if p_corr < 0.001 else "p = {:.3f}".format(p_corr)
+				
+			else:
+				raise Exception("Sorry, invalid p-value format. It should be 'text' or 'asterik'.")
 			x1, x2 = category_positions[comb[0]], category_positions[comb[1]]
 			bar_height = (y_range * bar_height_factor * (i + 1)) + top
 			ax.plot([x1, x1, x2, x2], [bar_tips, bar_height, bar_height, bar_tips], lw=2, c='k')
