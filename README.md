@@ -42,7 +42,6 @@ biomarker_y_axis_names = {
     "Biomarker_2": "CSF Biomarker 2 (pg/mL)",
     "Biomarker_3": "CSF Biomarker 3 (ng/mL)",
     "Biomarker_4": "CSF Biomarker 4 (pg/mL)",
-
 }
 
 # Define parameters
