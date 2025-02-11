@@ -6,3 +6,4 @@
 # @File    : __init__.py
 
 from .boxplot_with_significance_bars import *
+from .stats import *
