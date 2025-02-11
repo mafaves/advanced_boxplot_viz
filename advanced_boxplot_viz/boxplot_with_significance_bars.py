@@ -5,7 +5,7 @@ import seaborn as sns
 from itertools import combinations
 from scipy.stats import ttest_ind
 from statsmodels.stats.multitest import multipletests
-from utils import collect_p_values
+from advanced_boxplot_viz.utils import collect_p_values
 
 
 def generate_boxplots_with_significance(
