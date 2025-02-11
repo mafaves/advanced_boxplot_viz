@@ -1,8 +1,8 @@
-# Boxplot with statistical significance bars 📊
+# Customizable boxplots with statistical significance bars 📊
 
 ## Overview
 
-This repository provides a Python tool for creating boxplots with statistical significance bars. It supports multiple p-value correction methods (Bonferroni, FDR), customizable interquartile ranges, and color palettes for better visualization of statistical comparisons.
+This repository provides a Python tool for creating **customizable boxplots with statistical significance bars** that are ready for **paper presentation**. It supports multiple p-value correction methods (Bonferroni, FDR), customizable interquartile ranges, and color palettes for better visualization of statistical comparisons.
 
 ## Features
 
@@ -13,6 +13,14 @@ This repository provides a Python tool for creating boxplots with statistical si
 🔬 Supports multiple p-value corrections (Bonferroni, FDR, etc.) from [statsmodels.stats.multitest.multipletests](https://www.statsmodels.org/dev/generated/statsmodels.stats.multitest.multipletests.html) library 
 
 📊 Ideal for biomarker analysis and research visualization
+
+## Statistical Methods
+
+- **p-value correction:** The function uses the `multipletests` method from the `statsmodels.stats.multitest` library for multiple testing correction. To modify the correction method, ensure that it is one of the methods implemented in `multipletests`.  
+- **Statistical test:** The function performs a **t-test** (`ttest_ind`) to compare groups. If you wish to change the test, modify the following line in the code:  
+
+  ```python
+  _, p_value = ttest_ind(group1, group2, equal_var=True)
 
 ## Usage
 ```
@@ -113,3 +121,9 @@ generate_boxplots_with_significance(df, group_col, biomarker_list, palette, biom
 
 ## Output example
 ![boxplot](./boxplots.png)
+
+## Acknowledgment
+
+This code is modified from the original implementation found at [Boxplots with Significance Bars](https://rowannicholls.github.io/python/graphs/ax_based/boxplots_significance.html)
+
+
