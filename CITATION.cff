@@ -5,6 +5,7 @@ authors:
   given-names: "Marcos"
   orcid: "https://orcid.org/0009-0009-2248-8127"
 title: "Advanced boxplot visualization"
+DOI: 10.5281/zenodo.14857137
 version: 1.0.0
 date-released: 2025-02-10
 url: "https://github.com/mafaves/advanced_boxplot_viz"
