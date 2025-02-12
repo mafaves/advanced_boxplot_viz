@@ -6,8 +6,10 @@
 # @File    : __init__.py
 
 # __init__.py in the main folder
-from .advanced_boxplot_viz import *
+from .boxplot_with_significance_bars import generate_boxplots_with_significance
+from .utils import collect_p_values
+from .stats import check_variance_homogeneity, check_normality
 
-__all__ = ["advanced_boxplot_viz"]
+__all__ = ['boxplot_with_significance_bars', 'collect_p_values', 'check_variance_homogeneity', 'check_normality']
 
 
