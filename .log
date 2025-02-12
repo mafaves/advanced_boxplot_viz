@@ -3351,3 +3351,18 @@
 2025-02-11 11:17:51,176 [26408] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
 2025-02-11 11:17:51,176 [26408] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
 2025-02-11 11:17:51,177 [26408] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2025-02-12 09:48:32,399 [18648] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2025-02-12 09:48:32,410 [18648] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2025-02-12 09:48:32,411 [18648] INFO     root:247: [JupyterRequire] Initializing comms.
+2025-02-12 09:48:32,414 [18648] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2025-02-12 09:48:32,415 [18648] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2025-02-12 09:48:32,416 [18648] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2025-02-12 09:48:32,958 [18648] ERROR    ipykernel.comm:46: [JupyterRequire] No such comm target registered: jupyter.widget.control
+2025-02-12 09:48:32,983 [18648] WARNING  Comm:212: [JupyterRequire] No such comm: 2678d8a7-5f5b-4d3b-850d-61805a97dbe6
+2025-02-12 09:48:32,984 [18648] DEBUG    Comm:215: [JupyterRequire] Current comms: ['config.JupyterRequire#1739350112.411506', 'execute.JupyterRequire#1739350112.411506', 'safe_execute.JupyterRequire#1739350112.411506']
+2025-02-12 09:48:33,249 [18648] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2025-02-12 09:48:33,249 [18648] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2025-02-12 09:48:33,250 [18648] INFO     root:247: [JupyterRequire] Initializing comms.
+2025-02-12 09:48:33,254 [18648] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2025-02-12 09:48:33,255 [18648] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2025-02-12 09:48:33,256 [18648] DEBUG    root:97: [JupyterRequire] Registering comm targets.
