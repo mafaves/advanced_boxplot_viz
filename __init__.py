@@ -5,9 +5,6 @@
 # @Email   : marcos.aguilella@idival.org
 # @File    : __init__.py
 
-# __init__.py in the main folder
-from .advanced_boxplot_viz import *
-
-__all__ = ["advanced_boxplot_viz"]
-
-
+from advanced_boxplot_viz import boxplot_with_significance_bars
+from advanced_boxplot_viz import stats
+from advanced_boxplot_viz import utils
