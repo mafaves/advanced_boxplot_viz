@@ -17,7 +17,7 @@ setup(
     install_requires=[  # List of dependencies
         'matplotlib', 
         'seaborn',
-        'panda',
+        'pandas',
         'numpy',
         'itertools',
         'scipy',
