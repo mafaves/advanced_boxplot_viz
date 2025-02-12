@@ -1,9 +1,8 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # if __name__ == '__main__':
 #     setup()
 
-from setuptools import setup, find_packages
 
 setup(
     name='advanced_boxplot_viz',  # Name of your package
