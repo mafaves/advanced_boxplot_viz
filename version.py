@@ -5,5 +5,4 @@
 # @Email   : marcos.aguilella@idival.org
 # @File    : __init__.py
 
-from .advanced_boxplot_viz import *
-from .version import __version__
+__version__ = "1.0.0"
