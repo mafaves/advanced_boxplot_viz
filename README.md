@@ -23,50 +23,7 @@ This repository provides a Python tool for creating **customizable boxplots with
   _, p_value = ttest_ind(group1, group2, equal_var=True)
 
 ## Usage
-```
-import pandas as pd
-from boxplot_significance import generate_boxplots_with_significance
-
-# Load example data
-df = pd.read_csv("example_data.csv")
-
-biomarker_title_names = {
-    "Biomarker_1": "Plasma Biomarker 1 by AD group",
-    "Biomarker_2": "CSF Biomarker 2 by AD group",
-    "Biomarker_3": "CSF Biomarker 3 by AD group",
-    "Biomarker_4": "CSF Biomarker 4 by  AD group",
-}
-
-biomarker_y_axis_names = {
-    "Biomarker_1": "CSF Biomarker 1 (pg/mL)",
-    "Biomarker_2": "CSF Biomarker 2 (pg/mL)",
-    "Biomarker_3": "CSF Biomarker 3 (ng/mL)",
-    "Biomarker_4": "CSF Biomarker 4 (pg/mL)",
-}
-
-# Define parameters
-group_col = "nAD"  # Column indicating group classification (0 = Control, 1 = Disease)
-biomarker_list = ["Biomarker_1", "Biomarker_2", "Biomarker_3", "Biomarker_4"]  # List of biomarkers to analyze
-palette = {0: 'blue', 1: 'red'}  # Dictionary mapping group labels to colors
-subplots_x = 1  # Number of rows in the subplot grid
-subplots_y = 5  # Number of columns in the subplot grid
-fig_size = (20, 6)  # Size of the figure (width, height) in inches
-xtick_labels = ["Control", "Disease"]  # Labels for x-axis groups
-image_name = "boxplots.png"  # Filename for saving the generated boxplots
-bar_height_factor = 0.05  # Distance left between significance bars 
-bar_tips_factor = 0.01  # Length of the horizontal tips of significance bars 
-y_top_factor = 0.01  # Height of significance bars above the end of the violin plots 
-y_range_factor = 0.15  # Extra space added above the figure 
-asterisk_factor = 0.02  # Height of the asterisks above the significance bar 
-
-generate_boxplots_with_significance(df, group_col, biomarker_list, palette, biomarker_title_names, biomarker_y_axis_names,
-                                      subplots_x, subplots_y, fig_size,
-                                      xtick_labels, image_name,
-                                      bar_height_factor, bar_tips_factor,
-                                      y_top_factor, y_range_factor, asterisk_factor,
-                                      title= True, y_labels = True, correction_method= "fdr_bh", 
-                                      iqr_min= 0.05, iqr_max= 0.95, jitter_size = 8, alpha = 0.8, showfliers= False)
-```
+An example of usage can be seen in the Jupyter notebook ```./example/run.ipynb```
 
 ## Parameters explained
 
