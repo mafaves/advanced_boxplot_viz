@@ -19,7 +19,6 @@ setup(
         'seaborn',
         'pandas',
         'numpy',
-        'itertools',
         'scipy',
         'statsmodels'
     ],
