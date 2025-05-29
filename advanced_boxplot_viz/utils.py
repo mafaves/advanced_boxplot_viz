@@ -5,7 +5,7 @@ from itertools import combinations
 from scipy.stats import ttest_ind, mannwhitneyu
 from statsmodels.stats.multitest import multipletests
 
-def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, correction_method='fdr_bh', omnibus_results_df=None):
+def collect_p_values(df, group_col, biomarker_list, normality_df, omnibus_results_df=None, alpha = 0.05, correction_method='fdr_bh'):
     """
     Collects significant p-values for biomarker comparisons across groups using t-test or Mann-Whitney 
     depending on normality, and applies multiple testing correction.
