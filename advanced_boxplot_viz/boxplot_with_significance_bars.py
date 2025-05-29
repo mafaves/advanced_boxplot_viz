@@ -10,7 +10,7 @@ from .stats import check_normality, check_variance_homogeneity
 
 
 def generate_boxplots_with_significance(
-	df, group_col, biomarker_list, palette, biomarker_title_names,
+	df, group_col, biomarker_list, normality_df, palette, biomarker_title_names,
 	biomarker_y_axis_names, subplots_x=1, subplots_y=1, fig_size=(10, 6), 
 	xtick_labels=None, image_name="boxplot.png",
 	bar_height_factor=0.02, bar_tips_factor=0.005, 
@@ -53,7 +53,7 @@ def generate_boxplots_with_significance(
 	"""
 	print("Running...")
 	print("Plotting data between interquartiles 0.05 and 0.95")
-	significance_dict = collect_p_values(df, group_col, biomarker_list, correction_method)
+	significance_dict, results = collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, correction_method=correction_method)
 
 	fig, axes = plt.subplots(subplots_x, subplots_y, figsize=fig_size)
 	axes = axes.flatten()
