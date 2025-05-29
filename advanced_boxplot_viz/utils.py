@@ -5,7 +5,7 @@ from itertools import combinations
 from scipy.stats import ttest_ind, mannwhitneyu
 from statsmodels.stats.multitest import multipletests
 
-def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, correction_method='fdr_bh'):
+def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, correction_method='fdr_bh', omnibus_results_df=None):
     """
     Collects significant p-values for biomarker comparisons across groups using t-test or Mann-Whitney 
     depending on normality, and applies multiple testing correction.
@@ -17,6 +17,8 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, 
     - normality_df (pd.DataFrame): DataFrame with normality test p-values (rows=biomarkers, cols=groups)
     - alpha (float): Significance level for normality and corrected p-values
     - correction_method (str): Correction method for multiple testing ('fdr_bh', 'bonferroni', etc.)
+    - omnibus_results_df (pd.DataFrame or None): Optional, global ANOVA/Kruskal-Wallis results. 
+      Should have 'biomarker' and 'p_value_adj' columns.
 
     Returns:
     - significance_dict (dict): {biomarker: [(group_pair, corrected_p)]}
@@ -26,9 +28,18 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, 
     comparisons = []
     biomarker_map = []
     results = []
-
+    
     for biomarker in biomarker_list:
         groups = sorted(df[group_col].unique())
+        n_groups = len(groups)
+
+        # Optional gating by omnibus test
+        if n_groups > 3 and omnibus_results_df is not None:
+            p_adj = omnibus_results_df.loc[omnibus_results_df['biomarker'] == biomarker, 'p_value_adj']
+            if p_adj.empty or p_adj.values[0] >= alpha:
+                print(f"Skipping {biomarker} due to non-significant omnibus test.")
+                continue  # Skip this biomarker if not globally significant
+
         group_combinations = list(combinations(groups, 2))
 
         for g1, g2 in group_combinations:
@@ -41,18 +52,14 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, 
             if normal1 and normal2:
                 stat, p = ttest_ind(data1, data2, equal_var=False)
                 test = "t-test"
-                print(f"t-test for {biomarker} between {g1} and {g2}: statistic={stat}, p-value={p}")
             else:
                 stat, p = mannwhitneyu(data1, data2, alternative="two-sided")
                 test = "Mann-Whitney"
-                print(f"Mann-Whitney for {biomarker} between {g1} and {g2}: statistic={stat}, p-value={p}")
 
-            # Store for correction
             raw_p_values.append(p)
             comparisons.append((g1, g2))
             biomarker_map.append(biomarker)
 
-            # Detailed logging
             results.append({
                 "biomarker": biomarker,
                 "group1": g1,
@@ -65,7 +72,7 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, 
     # Apply multiple testing correction
     _, corrected_p_values, _, _ = multipletests(raw_p_values, alpha=alpha, method=correction_method)
 
-    # Organize significant results
+    # Compile significant pairwise comparisons
     significance_dict = {}
     for biomarker, comb, p_corr in zip(biomarker_map, comparisons, corrected_p_values):
         if p_corr < alpha:
