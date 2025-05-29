@@ -22,6 +22,9 @@ This repository provides a Python tool for creating **customizable boxplots with
   ```python
   _, p_value = ttest_ind(group1, group2, equal_var=True)
 
+## Installation
+```pip install git+https://github.com/mafaves/advanced_boxplot_viz.git```
+
 ## Usage
 An example of usage can be seen in the Jupyter notebook ```./example/run.ipynb```
 
