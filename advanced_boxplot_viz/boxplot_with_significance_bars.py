@@ -91,19 +91,17 @@ def generate_boxplots_with_significance(
 		ax.set_xticklabels(xtick_labels, fontsize=16)
 
 		# Significance bars settings
-		category_positions = {category: pos for pos, category in enumerate(sorted(df[group_col].unique()))}
-		print(f"Category positions for {biomarker}: {category_positions}") 
+		category_positions = {category: pos for pos, category in enumerate(sorted(df[group_col].unique()))} 
 
 		y_range = filtered_data.max() - filtered_data.min()
 		y_min, y_max = ax.get_ylim()		
 		top = filtered_data.max() + (y_range * y_top_factor)
 		ax.set_ylim(y_min, top + (y_range * y_range_factor))
 		
-		significant_combinations = significance_dict.get(biomarker, [])
-		print(f"Significant combinations for {biomarker}: {significant_combinations}") 
+		#significant_combinations = significance_dict.get(biomarker, [])
+
 
 		for i, (comb, p_corr) in enumerate(significance_dict.get(biomarker, [])):
-			print(f"Processing combination {comb} with p-value {p_corr} for biomarker {biomarker}")
 
 
 			# Determine the height of the significance bar
