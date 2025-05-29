@@ -2,7 +2,11 @@
 
 ## Overview
 
-This repository provides a Python tool for creating **customizable boxplots with statistical significance bars** that are ready for **paper presentation**. It supports multiple p-value correction methods (Bonferroni, FDR), customizable interquartile ranges, and color palettes for better visualization of statistical comparisons.
+This repository provides a Python tool for creating **customizable boxplots with statistical significance bars** that are ready for **paper presentation**. It supports multiple p-value correction methods (Bonferroni, FDR), customizable interquartile ranges, and color palettes for better visualization of statistical comparisons.  
+**Now supports automatic selection of statistical tests based on group count and normality:**
+- For 2 groups: t-test (if normal) or Mann-Whitney U (if not)
+- For 3+ groups: ANOVA (if all groups normal) or Kruskal-Wallis (if not), with pairwise post-hoc tests
+
 
 ## Features
 
@@ -16,17 +20,21 @@ This repository provides a Python tool for creating **customizable boxplots with
 
 ## Statistical Methods
 
-- **p-value correction:** The function uses the `multipletests` method from the `statsmodels.stats.multitest` library for multiple testing correction. To modify the correction method, ensure that it is one of the methods implemented in `multipletests`.  
-- **Statistical test:** The function performs a **t-test** (`ttest_ind`) to compare groups. If you wish to change the test, modify the following line in the code:  
-
-  ```python
-  _, p_value = ttest_ind(group1, group2, equal_var=True)
+- **p-value correction:** The function uses the `multipletests` method from the `statsmodels.stats.multitest` library for multiple testing correction. To modify the correction method, ensure that it is one of the methods implemented in `multipletests`.
+- **Statistical tests:**  
+  - **2 groups:**  
+    - If both groups are normal (Shapiro-Wilk (n < 50)/Anderson test (n> 50)), a **t-test** (`ttest_ind`) is performed.  
+    - If not, a **Mann-Whitney U test** (`mannwhitneyu`) is used.
+  - **3 or more groups:**  
+    - If all groups are normal, an **ANOVA** (`f_oneway`) is performed.  
+    - If not, a **Kruskal-Wallis test** (`kruskal`) is used.  
+    - For pairwise comparisons, t-test or Mann-Whitney U is chosen based on normality for each pair.
 
 ## Installation
 ```pip install git+https://github.com/mafaves/advanced_boxplot_viz.git```
 
 ## Usage
-An example of usage can be seen in the Jupyter notebook ```./example/run.ipynb```
+An example of usage can be seen in the Jupyter notebook [`./example/run.ipynb`](./example/run.ipynb)
 
 ## Parameters explained
 
@@ -77,6 +85,8 @@ An example of usage can be seen in the Jupyter notebook ```./example/run.ipynb``
 **alpha (float, optional)** Transparency level for strip plot points.
 
 **showfliers (bool, optional)** Whether to display outliers in the boxplot.
+
+**omnibus results** Results of omnibus test when the numbers of groups > 2
 
 ## Output example
 ![boxplot](./example/boxplots.png)
