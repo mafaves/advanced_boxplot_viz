@@ -107,7 +107,8 @@ def generate_boxplots_with_significance(
 
 
 			# Determine the height of the significance bar
-			level = len(significant_combinations) - i
+			#level = len(significant_combinations) - i
+			level = i  # Start from 1 for the first significant combination
 			bar_height = (y_range * bar_height_factor * level) + top
 			bar_tips = bar_height - (y_range * bar_tips_factor)
 
@@ -120,7 +121,6 @@ def generate_boxplots_with_significance(
 			else:
 				raise Exception("Sorry, invalid p-value format. It should be 'text' or 'asterik'.")
 			x1, x2 = category_positions[comb[0]], category_positions[comb[1]]
-			#bar_height = (y_range * bar_height_factor * (i + 1)) + top
 			ax.plot([x1, x1, x2, x2], [bar_tips, bar_height, bar_height, bar_tips], lw=2, c='k')
 			text_height = bar_height + (y_range * asterisk_factor)
 			ax.text((x1 + x2) / 2, text_height, sig_symbol, ha='center', va='bottom', c='k', fontsize=18)
