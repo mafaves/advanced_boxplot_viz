@@ -41,9 +41,11 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, alpha = 0.05, 
             if normal1 and normal2:
                 stat, p = ttest_ind(data1, data2, equal_var=False)
                 test = "t-test"
+                print(f"t-test for {biomarker} between {g1} and {g2}: statistic={stat}, p-value={p}")
             else:
                 stat, p = mannwhitneyu(data1, data2, alternative="two-sided")
                 test = "Mann-Whitney"
+                print(f"Mann-Whitney for {biomarker} between {g1} and {g2}: statistic={stat}, p-value={p}")
 
             # Store for correction
             raw_p_values.append(p)
