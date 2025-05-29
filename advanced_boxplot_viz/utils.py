@@ -35,6 +35,7 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, omnibus_result
 
         use_omnibus = n_groups >= 3 and omnibus_results_df is not None
         if use_omnibus:
+            print(f"Using omnibus results for biomarker '{biomarker}'")
             row = omnibus_results_df.loc[omnibus_results_df['biomarker'] == biomarker]
             if row.empty or row['p_value_adj'].values[0] >= alpha:
                 continue  # skip if no significant omnibus result
