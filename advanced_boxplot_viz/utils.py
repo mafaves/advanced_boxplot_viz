@@ -48,7 +48,6 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, omnibus_result
 
             # Choose test
             if use_omnibus:
-                print(f"Using omnibus test {omnibus_test} for biomarker {biomarker} between groups {g1} and {g2}")
                 if omnibus_test == "ANOVA":
                     stat, p = ttest_ind(data1, data2, equal_var=False)
                     test = "t-test (via ANOVA)"
@@ -58,7 +57,6 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, omnibus_result
                 else:
                     raise ValueError(f"Unknown omnibus test '{omnibus_test}' for biomarker {biomarker}")
             else:
-                print(f"Testing biomarker {biomarker} between groups {g1} and {g2}")
                 # Normality-based selection
                 normal1 = normality_df.loc[biomarker, g1] > alpha
                 normal2 = normality_df.loc[biomarker, g2] > alpha
