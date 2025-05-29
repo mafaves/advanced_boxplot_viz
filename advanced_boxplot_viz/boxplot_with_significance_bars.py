@@ -10,13 +10,13 @@ from .stats import check_normality, check_variance_homogeneity
 
 
 def generate_boxplots_with_significance(
-	df, group_col, biomarker_list, normality_df, omnibus_results, palette, biomarker_title_names,
-	biomarker_y_axis_names, subplots_x=1, subplots_y=1, fig_size=(10, 6), 
+	df, group_col, biomarker_list, normality_df, palette, biomarker_title_names,
+	biomarker_y_axis_names, omnibus_results = None, subplots_x=1, subplots_y=1, fig_size=(10, 6), 
 	xtick_labels=None, image_name="boxplot.png",
 	bar_height_factor=0.02, bar_tips_factor=0.005, 
 	y_top_factor=0.05, y_range_factor=0.1, asterisk_factor=0.02, 
 	title=True, y_labels=True, correction_method='fdr_bh', p_value_format = 'text',
-	iqr_min=0.05, iqr_max=0.95, jitter_size=8, alpha=0.8, showfliers=False
+	iqr_min=0.05, iqr_max=0.95, jitter_size=8, alpha=0.8, showfliers=False 
 ):
 	"""
 	Generates boxplots with significance bars across multiple biomarkers.
