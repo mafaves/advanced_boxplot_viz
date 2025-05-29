@@ -59,7 +59,7 @@ def generate_boxplots_with_significance(
 	axes = axes.flatten()
 
 	for ax, biomarker in zip(axes, biomarker_list):
-		filtered_data = df.groupby(group_col)[biomarker].apply(
+		filtered_data = df.groupby(group_col, observed=True)[biomarker].apply(
 			lambda x: x[(x >= x.quantile(iqr_min)) & (x <= x.quantile(iqr_max))]
 		).reset_index(level=0, drop=True)
 		
