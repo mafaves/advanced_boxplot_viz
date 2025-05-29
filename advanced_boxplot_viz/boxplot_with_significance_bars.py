@@ -92,7 +92,8 @@ def generate_boxplots_with_significance(
 
 		# Significance bars settings
 		category_positions = {category: pos for pos, category in enumerate(sorted(df[group_col].unique()))}
-		
+		print(f"Category positions for {biomarker}: {category_positions}") 
+
 		y_range = filtered_data.max() - filtered_data.min()
 		y_min, y_max = ax.get_ylim()		
 		top = filtered_data.max() + (y_range * y_top_factor)
@@ -102,6 +103,9 @@ def generate_boxplots_with_significance(
 		print(f"Significant combinations for {biomarker}: {significant_combinations}") 
 
 		for i, (comb, p_corr) in enumerate(significance_dict.get(biomarker, [])):
+			print(f"Processing combination {comb} with p-value {p_corr} for biomarker {biomarker}")
+
+
 			# Determine the height of the significance bar
 			level = len(significant_combinations) - i
 			bar_height = (y_range * bar_height_factor * level) + top
@@ -116,7 +120,7 @@ def generate_boxplots_with_significance(
 			else:
 				raise Exception("Sorry, invalid p-value format. It should be 'text' or 'asterik'.")
 			x1, x2 = category_positions[comb[0]], category_positions[comb[1]]
-			bar_height = (y_range * bar_height_factor * (i + 1)) + top
+			#bar_height = (y_range * bar_height_factor * (i + 1)) + top
 			ax.plot([x1, x1, x2, x2], [bar_tips, bar_height, bar_height, bar_tips], lw=2, c='k')
 			text_height = bar_height + (y_range * asterisk_factor)
 			ax.text((x1 + x2) / 2, text_height, sig_symbol, ha='center', va='bottom', c='k', fontsize=18)
