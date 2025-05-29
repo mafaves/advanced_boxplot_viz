@@ -34,7 +34,7 @@ def collect_p_values(df, group_col, biomarker_list, normality_df, omnibus_result
         n_groups = len(groups)
 
         # Optional gating by omnibus test
-        if n_groups > 3 and omnibus_results_df is not None:
+        if n_groups > 2 and omnibus_results_df is not None:
             p_adj = omnibus_results_df.loc[omnibus_results_df['biomarker'] == biomarker, 'p_value_adj']
             if p_adj.empty or p_adj.values[0] >= alpha:
                 print(f"Skipping {biomarker} due to non-significant omnibus test.")
