@@ -1,6 +1,8 @@
-from scipy.stats import shapiro
+from scipy.stats import shapiro,normaltest
 from statsmodels.stats.multitest import multipletests
 import pandas as pd
+import numpy as np
+from scipy.stats import levene
 
 def check_normality(df, biomarker_list, group_col, correction_method):
 	"""
@@ -26,9 +28,20 @@ def check_normality(df, biomarker_list, group_col, correction_method):
 		for group in groups:
 			# Filter the DataFrame to get only the data for the current group
 			group_data = df[df[group_col] == group][biomarker].dropna()
+			n = len(group_data)
+			if n < 3:
+				# If there are fewer than 3 data points, we cannot perform the Shapiro-Wilk test
+				p_value = float('nan')
+				print("Skipping normality test for group '{}' of '{}' variable due to insufficient data points.".format(group, biomarker))
+			elif n < 50:
+				# If there are between 3 and 49 data points, we can perform the Shapiro-Wilk test
+				_, p_value = shapiro(group_data)
+				print("Shapiro-Wilk test performed for group '{}' of '{}' variable.".format(group, biomarker))
+			else:
+				# If there are 50 or more data points, we can use the normal approximation
+				_, p_value = normaltest(group_data)
+				print("D’Agostino and Pearson’s test performed for group '{}' of '{}' variable.".format(group, biomarker))
 
-			# Perform the Shapiro-Wilk test
-			stat, p_value = shapiro(group_data)
 			biomarker_pvalues.append(p_value)
 			all_p_values.append(p_value)
 		
@@ -50,8 +63,7 @@ def check_normality(df, biomarker_list, group_col, correction_method):
 
 	return results_df
 
-from scipy.stats import levene
-from statsmodels.stats.multitest import multipletests
+
 
 def check_variance_homogeneity(df, biomarker_list, group_col, correction_method):
 	"""
