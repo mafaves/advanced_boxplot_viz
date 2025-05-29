@@ -99,6 +99,7 @@ def generate_boxplots_with_significance(
 		ax.set_ylim(y_min, top + (y_range * y_range_factor))
 		
 		significant_combinations = significance_dict.get(biomarker, [])
+		print(f"Significant combinations for {biomarker}: {significant_combinations}") 
 
 		for i, (comb, p_corr) in enumerate(significance_dict.get(biomarker, [])):
 			# Determine the height of the significance bar
