@@ -19,7 +19,7 @@ setup(
         'seaborn',
         'pandas',
         'numpy',
-        'itertools',
+        #'itertools',
         'scipy',
         'statsmodels'
     ],
